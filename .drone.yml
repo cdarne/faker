@@ -1,0 +1,25 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: install
+  image: ruby:2.7
+  volumes:
+  - name: bundle
+    path: /usr/local/bundle
+  commands:
+  - bundle install --jobs=3 --retry=3
+
+- name: test
+  image: ruby:2.7
+  volumes:
+  - name: bundle
+    path: /usr/local/bundle
+  commands:
+  - rake test
+
+volumes:
+- name: bundle
+  temp: {}
